@@ -3,17 +3,46 @@ document.addEventListener("DOMContentLoaded",function(){
 });
 
 var obj={
-  init:function(){
-    this.getFromJson("json/data.json","data");
+  user:{
+    name:"admin",
+    password:"vetobit"
   },
-  getFromJson:function (url,array){
+  init:function(){
+    this.authorizationStart(this.user.name,this.user.password,"json/users.json",function(){
+      if(obj.authorization){
+        obj.getDataFromJson("json/data.json");
+      }
+    });
+  },
+  getDataFromJson:function (url){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function(){
       if(xhr.readyState==4 && xhr.status==200){
-        obj[array]=JSON.parse(xhr.responseText);
+        obj.data=JSON.parse(xhr.responseText);
       }
-    }
+    };
     xhr.send(null);
+  },
+  authorizationStart:function(userName,password,url,func){
+    var xhr = new XMLHttpRequest();
+
+    obj.authorization = false;
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState==4 && xhr.status==200){
+        JSON.parse(xhr.responseText).map(function(responseUser){
+          if(responseUser.userName==userName && responseUser.password==password){
+            obj.authorization = true;
+            obj.user.privileges = responseUser.privileges;
+          }
+        });
+        obj.authorizationEnd(func);
+      }
+    };
+    xhr.send(null);
+  },
+  authorizationEnd:function(func){
+    func();
   }
 };
