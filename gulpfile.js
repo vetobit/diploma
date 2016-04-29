@@ -49,6 +49,6 @@ gulp.task('watch', function() {
   gulp.watch(paths.js, ['js']);
   gulp.watch(paths.scss, ['sass']);
   gulp.watch(paths.html, ['html']);
-  gulp.watch(paths.html, ['json']);
+  gulp.watch(paths.json, ['json']);
 });
 gulp.task('default', ['watch', 'js', 'sass', 'html', 'json']);
