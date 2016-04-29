@@ -1,0 +1,16 @@
+{
+	[
+		{
+			name:"Виталий",
+			privileges:0,
+			userName:"admin"
+			password:"vetobit"	
+		},
+		{
+			name:"Игорь",
+			privileges:1,
+			userName:"igor",
+			password:"1"	
+		},
+	]
+}
