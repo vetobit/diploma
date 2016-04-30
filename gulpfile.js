@@ -67,8 +67,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.html, ['html']);
   gulp.watch(paths.json, ['json']);
 });
-//gulp.task('default', ['clean', 'js', 'sass', 'html', 'json', 'nwjs-config', 'serve', 'watch', 'nwjs']);
 
 gulp.task('default', ['clean'], function() {
-    gulp.run(['js', 'sass', 'html', 'json', 'nwjs-config', /*'serve', 'watch',*/ 'nwjs']);
+    gulp.run(['js', 'sass', 'html', 'json', 'nwjs-config', 'serve', 'watch', 'nwjs']);
 });

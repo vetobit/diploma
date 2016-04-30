@@ -10,16 +10,17 @@ var obj={                                                                       
   init:function(){                                                                                // Функция инициализации
     this.authorizationStart(this.user.name,this.user.password,"json/users.json",function(){       // Запуск функции авторизации с параметрами (имя, пароль, путь до файла с пользователями, функция после получения данных об авторизации)
       if(obj.authorization){                                                                      // Если авторизация успешна
-        obj.getDataFromJson("json/data.json");                                                    // Выполняем функцию загрузки всех товаров по пути к файлу товаров
+        obj.getDataFromJson("json/data.json",function(){obj.view(obj.user.privileges);});                                                    // Выполняем функцию загрузки всех товаров по пути к файлу товаров
       }
     });
   },
-  getDataFromJson:function (url){                                                                 // Функция получения товаров из файла
+  getDataFromJson:function (url,func){                                                                 // Функция получения товаров из файла
     var xhr = new XMLHttpRequest();                                                               // Объявляем новый объект соединения
     xhr.open("GET", url, true);                                                                   // Задаём условия соединения (метод GET, путь до файла с товарами, ассихронная загрузка)
     xhr.onreadystatechange = function(){                                                          // Объявляем функцию после завершения подготовки объекта соединения
       if(xhr.readyState==4 && xhr.status==200){                                                   // Если объект соединения завершил подготовку и статус сервера вернул положительный результат
         obj.data=JSON.parse(xhr.responseText);                                                    // То записываем в объект программы новый массив для хранения товаров и записываем в него данные из файла
+        func();
       }
     };
     xhr.send(null);                                                                               // Отправляем пустой запрос на сервер для получения ответа
@@ -44,5 +45,35 @@ var obj={                                                                       
   },
   authorizationEnd:function(func){                                                                // Функция конца авторизации, которая принимает функцию инициализации
     func();                                                                                       // Вызываем функцию инициализации
+  },
+  addInData:function(product){
+    if(product){
+      this.data.push(product);
+    }
+    console.log(data)   //записать в продукты
+  },
+  addUser:function(user){
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "json/users.json", true);
+    xhr.onreadystatechange = function(){
+      if(xhr.readyState==4 && xhr.status==200){
+        console.log(JSON.stringify(JSON.parse(xhr.responseText).push(user))); // вместо вывода записать
+      }
+    };
+    xhr.send(null);
+  },
+  newQuantityInProduct:function(productId,quantity){
+    this.data[productId].quantity=quantity;
+    this.addInData(false);
+  },
+  addToCard:function(productId){
+    if(!this.card){
+      this.card=[];
+    }
+    this.card.push(this.data[productId]);
+  },
+  view:function(privileges){
+    console.log(privileges);
   }
 };
