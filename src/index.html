@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
+	<div class="screen" id="loginForm">
+		<div id="login">
+			<label for="userName">Введите логин</label>
+			<input type="text" id="userName" oninput="obj.user.name=this.value">
+			<label for="password">Введите пароль</label>
+			<input type="password" id="password" oninput="obj.user.password=this.value">
+			<input type="button" value="Войти" onclick="obj.init();">
+		</div>
+	</div>
 </body>
 </html>

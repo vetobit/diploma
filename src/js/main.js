@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded",function(){                                          // при загрузки страницы
-  obj.init();                                                                                     // выполнить функцию инициализации
+  window.location.hash="loginForm";                                                               // выполнить функцию инициализации
 });
 
 var obj={                                                                                         // Объявляем главный объект программы
@@ -74,6 +74,6 @@ var obj={                                                                       
     this.card.push(this.data[productId]);
   },
   view:function(privileges){
-    console.log(privileges);
+    window.location.hash="next";
   }
 };
