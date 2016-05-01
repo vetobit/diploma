@@ -12,6 +12,9 @@ var obj={                                                                       
       if(obj.authorization){                                                                      // Если авторизация успешна
         obj.getDataFromJson("json/data.json",function(){obj.view(obj.user.privileges);});                                                    // Выполняем функцию загрузки всех товаров по пути к файлу товаров
       }
+      else{
+        console.log("Нет такого пользователя");
+      }
     });
   },
   getDataFromJson:function (url,func){                                                                 // Функция получения товаров из файла
@@ -69,11 +72,37 @@ var obj={                                                                       
     this.addInData(false);
     this.view(this.user.privileges);
   },
+  scanProduct:function(elem){
+    var parent = elem.parentNode,
+        barcode = parent.querySelector(".productBarcode").value;
+
+    for(key in obj.data){
+      var product = obj.data[key];
+      if(!product.quantity){
+        product.quantity=0;
+      }
+      if(product.barcode==barcode){
+        product.quantity+=1;
+        obj.newQuantityInProduct(key,product.quantity);
+      }
+    }
+  },
   addToCard:function(productId){
     if(!this.card){
       this.card=[];
     }
     this.card.push(this.data[productId]);
+  },
+  bye:function(elem){
+    var parent = elem.parentNode,
+        checkboxs = parent.querySelectorAll(".trProductCheckbox");
+    for(i=0;i<checkboxs.length;i++){
+      if(checkboxs[i].getAttribute('data-check')=="true"){
+        obj.addToCard(+checkboxs[i].parentNode.parentNode.querySelector(".trProductId").innerHTML);
+        checkboxs[i].click();
+      }
+    }
+    document.querySelector("#num").innerHTML=obj.card.length+1;
   },
   view:function(privileges){
     var hashs=[
@@ -86,21 +115,46 @@ var obj={                                                                       
     table.innerHTML+="<tbody></tbody>";
     for(key in obj.data){
       var product=obj.data[key];
-      if(!product.number){
-        product.number=0;
+      if(!product.quantity){
+        product.quantity=0;
       }
-      string+="<tr><td class='trProductId'>"+key+"</td><td class='trProductName'>"+product.name+"</td><td class='trProductBarcode'>"+product.barcode+"</td><td class='trProductNumber'>"+product.number+"</td></tr>";
+      if(privileges!=2){
+        string+="<tr><td class='trProductId'>"+key+"</td><td class='trProductName'>"+product.name+"</td><td class='trProductBarcode'>"+product.barcode+"</td><td class='trProductNumber'>"+product.quantity+"</td></tr>";
+      }
+      else{
+        string+="<tr><td class='trProductId'>"+key+"</td><td class='trProductName'>"+product.name+"</td><td class='trProductBarcode'>"+product.barcode+"</td><td class='trProductNumber'>"+product.quantity+"</td><td><input class='trProductCheckbox' type='checkbox' data-check='false' onchange='obj.checkbox(this);'></td></tr>";
+      }  
     }
     table.querySelector("tbody").innerHTML=string;
     window.location.hash=hashs[privileges];
+  },
+  checkbox:function(elem){
+    var value = elem.getAttribute("data-check");
+    if(value == "false"){
+      value="true";
+    }else{
+      value="false";
+    }
+    elem.setAttribute("data-check",value);
   },
   getProduct:function(elem){
     var parent=elem.parentNode,
         product={
           name:parent.querySelector(".productName").value,
           barcode:parent.querySelector(".productBarcode").value,
-          number:parent.querySelector(".productNumber").value
+          quantity:parent.querySelector(".productNumber").value
         };
     obj.addInData(product);
+  },
+  viewCard:function(){
+    var table=document.querySelector(".cardProducts"),
+        string="";
+    table.innerHTML="<tbody></tbody>";
+    table=table.querySelector("tbody");
+    for(key in obj.card){
+      var product = obj.data[key];
+      string+="<tr><td>"+key+"</td><td>"+product.name+"</td><td>"+product.barcode+"</td><td><input type=number value="+product.quantity+" oninput='obj.card["+key+"]=this.value;'></td></tr>";
+    }
+    table.innerHTML=string;
   }
 };

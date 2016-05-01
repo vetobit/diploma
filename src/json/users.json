@@ -10,5 +10,11 @@
     "privileges":1,
     "userName":"igor",
     "password":"1"  
+  },
+  {
+    "name":"Максим",
+    "privileges":2,
+    "userName":"max",
+    "password":"1"
   }
 ]
