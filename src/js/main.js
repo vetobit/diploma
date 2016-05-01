@@ -91,7 +91,7 @@ var obj={                                                                       
     if(!this.card){
       this.card=[];
     }
-    this.card.push(this.data[productId]);
+    this.card.push(JSON.parse(JSON.stringify(this.data[productId])));
   },
   bye:function(elem){
     var parent = elem.parentNode,
@@ -102,7 +102,7 @@ var obj={                                                                       
         checkboxs[i].click();
       }
     }
-    document.querySelector("#num").innerHTML=obj.card.length+1;
+    document.querySelector("#num").innerHTML=obj.card.length;
   },
   view:function(privileges){
     var hashs=[
@@ -149,12 +149,23 @@ var obj={                                                                       
   viewCard:function(){
     var table=document.querySelector(".cardProducts"),
         string="";
-    table.innerHTML="<tbody></tbody>";
+    table.innerHTML+="<tbody></tbody>";
     table=table.querySelector("tbody");
     for(key in obj.card){
       var product = obj.data[key];
-      string+="<tr><td>"+key+"</td><td>"+product.name+"</td><td>"+product.barcode+"</td><td><input type=number value="+product.quantity+" oninput='obj.card["+key+"]=this.value;'></td></tr>";
+      string+="<tr><td>"+key+"</td><td>"+product.name+"</td><td>"+product.barcode+"</td><td><input type=number min=0 max="+product.quantity+" value="+product.quantity+" oninput='obj.card["+key+"].quantity=this.value;'></td></tr>";
     }
     table.innerHTML=string;
+    document.querySelector('.cardProducts').className+=" open";
+  },
+  mergeInData:function(){
+    obj.card.map(function(item){
+      obj.data.map(function(product){
+        if(product.barcode==item.barcode){
+          console.log(product.quantity,item.quantity,product.quantity-item.quantity);          
+          product.quantity=product.quantity - parseInt(item.quantity);
+        }
+      });
+    });
   }
 };

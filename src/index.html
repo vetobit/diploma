@@ -27,9 +27,9 @@
 				</tr>
 			</thead>
 		</table>
-		<input type="text" value="product" class="productName">
-		<input type="namber" value="123456789012" class="productBarcode">
-		<input type="namber" value="5" class="productNumber">
+		<input type="text" placeholder="Название" class="productName">
+		<input type="number" placeholder="Штрихкод" class="productBarcode">
+		<input type="number" placeholder="Количество" class="productNumber">
 		<input type="button" value="добавить" onclick="obj.getProduct(this);">
 	</div>
 	<div class="screen" id="cashier">
@@ -43,7 +43,7 @@
 				</tr>
 			</thead>
 		</table>
-		<input type="namber" value="210987654321" class="productBarcode">
+		<input type="number" placeholder="Штрихкод" class="productBarcode">
 		<input type="button" value="просканировать" onclick="obj.scanProduct(this);">
 	</div>
 	<div class="screen" id="buyer">
@@ -58,11 +58,11 @@
 				</tr>
 			</thead>
 		</table>
-		<input type="button" value="купить товары" onclick="obj.bye(this);">
+		<input type="button" value="в корзину" onclick="obj.bye(this);">
 		<div id="card">
 			В вашей корзине <span id="num">0</span> позиций
 		<input type="button" value="показать" onclick="obj.viewCard();">
-		<input type="button" value="очистить" onclick="obj.card=[]; document.querySelector('#num').innerHTML=0;">
+		<input type="button" value="очистить" onclick="obj.card=[]; document.querySelector('#num').innerHTML=0; document.querySelector('.cardProducts').classList.remove('open');">
 		<table class="cardProducts">
 			<thead>
 				<th>id</th>

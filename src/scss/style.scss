@@ -3,6 +3,11 @@ body{
   padding:0;
   font:16px/1.5em Arial,sans-serif;
 }
+.productName,.productBarcode,.productNumber{
+	max-width:118px;
+	padding:10px 15px;
+	box-sizing:border-box;
+}
 .screen{
 	display:none;
 	position:absolute;
@@ -12,6 +17,17 @@ body{
 	&:target{
 		display:block;
 	}
+	text-align:center;
+	input[type=button]{
+		background:#D6D3D6;
+		min-width:118px;
+		border:none;
+		cursor:pointer;
+		padding:10px 0;
+		font-weight:bold;
+		text-transform:uppercase;
+		margin-bottom:20px;
+	}
 }
 #login{
 	width:200px;
@@ -19,21 +35,15 @@ body{
 	margin:200px auto;
 	border:1px solid #BBBABA;
 	border-radius:5px;
+	text-align:left;
 	input{
 		display:block;
-		width:100%;
+		max-width:100%;
+		min-width:100%;
 		margin-bottom:20px;
 		outline:none;
 		padding:5px 15px;
 		box-sizing:border-box;
-	}
-	input[type=button]{
-		background:#D6D3D6;
-		border:none;
-		cursor:pointer;
-		padding:10px 0;
-		font-weight:bold;
-		text-transform:uppercase;
 	}
 	label{
 		display:inline-block;
@@ -41,5 +51,31 @@ body{
 		margin-bottom:15px;
 		border-bottom:1px dotted #000;
 		cursor:pointer;
+	}
+}
+table{
+	max-width:700px;
+	margin:100px auto 20px;
+	border-collapse:collapse;
+	border:1px solid rgba(0,0,0,.3);
+	th{
+		vertical-align:middle;
+		text-align:center;
+		padding:10px 15px;
+	}
+	td{
+		padding:10px 15px;
+		border:1px solid rgba(0,0,0,.3);
+	}
+	tr{
+		&:nth-child(2n){
+			background:rgba(0,0,0,.1);
+		}
+	}
+}
+.cardProducts{
+	display:none;
+	&.open{
+		display:table;
 	}
 }
