@@ -14,6 +14,7 @@
 			<label for="password">Введите пароль</label>
 			<input type="password" id="password" oninput="obj.user.password=this.value">
 			<input type="button" value="Войти" onclick="obj.init();">
+			<input type="button" value="зарегестрировать" onclick="obj.addUser(obj.user);">
 		</div>
 	</div>
 	<div class="screen" id="admin">
@@ -71,7 +72,7 @@
 				<th>Колличество</th>
 			</thead>
 		</table>
-		<input type="button" value="оформить">
+		<input type="button" value="оформить" onclick="obj.mergeInData();">
 		</div>
 	</div>
 </body>

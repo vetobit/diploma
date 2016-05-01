@@ -53,15 +53,19 @@ var obj={                                                                       
     if(product){
       this.data.push(product);
     }
-    console.log(obj.data)   //записать в продукты
+    var fs=require("fs");
+    //console.log(obj.data)   //записать в продукты
+    fs.writeFileSync("json/data.json",JSON.stringify(obj.data),"utf8");
     this.view(this.user.privileges);
   },
   addUser:function(user){
-    var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest(),
+        fs=require("fs");
 
     xhr.open("GET", "json/users.json", true);
     xhr.onreadystatechange = function(){
       if(xhr.readyState==4 && xhr.status==200){
+        fs.writeFileSync("json/users.json",JSON.stringify(JSON.parse(xhr.responseText).push(user)),"utf8");
         console.log(JSON.stringify(JSON.parse(xhr.responseText).push(user))); // вместо вывода записать
       }
     };
@@ -82,7 +86,7 @@ var obj={                                                                       
         product.quantity=0;
       }
       if(product.barcode==barcode){
-        product.quantity+=1;
+        product.quantity=+product.quantity+1;
         obj.newQuantityInProduct(key,product.quantity);
       }
     }
@@ -167,5 +171,6 @@ var obj={                                                                       
         }
       });
     });
+    obj.addInData(false);
   }
 };
