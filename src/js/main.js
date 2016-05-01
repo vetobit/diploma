@@ -50,7 +50,8 @@ var obj={                                                                       
     if(product){
       this.data.push(product);
     }
-    console.log(data)   //записать в продукты
+    console.log(obj.data)   //записать в продукты
+    this.view(this.user.privileges);
   },
   addUser:function(user){
     var xhr = new XMLHttpRequest();
@@ -66,6 +67,7 @@ var obj={                                                                       
   newQuantityInProduct:function(productId,quantity){
     this.data[productId].quantity=quantity;
     this.addInData(false);
+    this.view(this.user.privileges);
   },
   addToCard:function(productId){
     if(!this.card){
@@ -74,6 +76,31 @@ var obj={                                                                       
     this.card.push(this.data[productId]);
   },
   view:function(privileges){
-    window.location.hash="next";
+    var hashs=[
+                "admin",
+                "cashier",
+                "buyer"
+              ],
+        table=document.querySelector("#"+hashs[privileges]+" .products"),
+        string="";
+    table.innerHTML+="<tbody></tbody>";
+    for(key in obj.data){
+      var product=obj.data[key];
+      if(!product.number){
+        product.number=0;
+      }
+      string+="<tr><td class='trProductId'>"+key+"</td><td class='trProductName'>"+product.name+"</td><td class='trProductBarcode'>"+product.barcode+"</td><td class='trProductNumber'>"+product.number+"</td></tr>";
+    }
+    table.querySelector("tbody").innerHTML=string;
+    window.location.hash=hashs[privileges];
+  },
+  getProduct:function(elem){
+    var parent=elem.parentNode,
+        product={
+          name:parent.querySelector(".productName").value,
+          barcode:parent.querySelector(".productBarcode").value,
+          number:parent.querySelector(".productNumber").value
+        };
+    obj.addInData(product);
   }
 };

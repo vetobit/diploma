@@ -9,12 +9,54 @@
 <body>
 	<div class="screen" id="loginForm">
 		<div id="login">
-			<label for="userName">Введите логин</label>
-			<input type="text" id="userName" oninput="obj.user.name=this.value">
+			<label for="userНазвание">Введите логин</label>
+			<input type="text" id="userНазвание" oninput="obj.user.Название=this.value">
 			<label for="password">Введите пароль</label>
 			<input type="password" id="password" oninput="obj.user.password=this.value">
 			<input type="button" value="Войти" onclick="obj.init();">
 		</div>
+	</div>
+	<div class="screen" id="admin">
+		<table class="products">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Название</th>
+					<th>штрихкод</th>
+					<th>количество</th>
+				</tr>
+			</thead>
+		</table>
+		<input type="text" value="product" class="productName">
+		<input type="namber" value="123456789012" class="productBarcode">
+		<input type="namber" value="5" class="productNumber">
+		<input type="button" value="добавить" onclick="obj.getProduct(this);">
+	</div>
+	<div class="screen" id="cashier">
+		<table class="products">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Название</th>
+					<th>штрихкод</th>
+					<th>количество</th>
+				</tr>
+			</thead>
+		</table>
+		<input type="namber" value="210987654321" class="productBarcode">
+		<input type="button" value="просканировать" onclick="">
+	</div>
+	<div class="screen" id="buyer">
+		<table class="products">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>Название</th>
+					<th>штрихкод</th>
+					<th colspan="2">количество</th>
+				</tr>
+			</thead>
+		</table>
 	</div>
 </body>
 </html>
