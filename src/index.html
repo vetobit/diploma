@@ -8,13 +8,26 @@
 </head>
 <body>
 	<div class="screen" id="loginForm">
-		<div id="login">
+		<div class="form">
 			<label for="userName">Введите логин</label>
-			<input type="text" id="userName" oninput="obj.user.name=this.value">
+			<input type="text" id="userName" oninput="obj.user.userName=this.value">
 			<label for="password">Введите пароль</label>
 			<input type="password" id="password" oninput="obj.user.password=this.value">
 			<input type="button" value="Войти" onclick="obj.init();">
-			<input type="button" value="зарегестрировать" onclick="obj.addUser(obj.user);">
+			<input type="button" value="Регистрация" onclick="window.location.hash='registrationForm';">
+		</div>
+	</div>
+	<div class="screen" id="registrationForm">
+		<div class="form">
+			<label for="userName">Новый логин</label>
+			<input type="text" id="userName" oninput="obj.user.userName=this.value">
+			<label for="password">Новый пароль</label>
+			<input type="password" id="password" oninput="obj.user.password=this.value">
+			<label for="name">Новое имя</label>
+			<input type="text" id="name" oninput="obj.user.name=this.value">
+			<label for="privileges">Будущие привелегии</label>
+			<input type="number" min="0" max="2" id="privileges" oninput="obj.user.privileges=this.value">
+			<input type="button" value="зарегестрировать" onclick="obj.addUser(); window.location.hash='loginForm';">
 		</div>
 	</div>
 	<div class="screen" id="admin">
