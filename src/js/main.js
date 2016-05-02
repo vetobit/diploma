@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded",function(){                        
 
 var obj={                                                                                         // Объявляем главный объект программы
   user:{                                                                                          // Данные о пользователе, который будет собирать модуль программы
-    name:"admin",                                                                                 // Имя пользователя
+    userName:"admin",                                                                                 // Имя пользователя
     password:"vetobit"                                                                            // Пароль пользователя
   },
   init:function(){                                                                                // Функция инициализации
-    this.authorizationStart(this.user.name,this.user.password,"json/users.json",function(){       // Запуск функции авторизации с параметрами (имя, пароль, путь до файла с пользователями, функция после получения данных об авторизации)
+    this.authorizationStart(this.user.userName,this.user.password,"json/users.json",function(){       // Запуск функции авторизации с параметрами (имя, пароль, путь до файла с пользователями, функция после получения данных об авторизации)
       if(obj.authorization){                                                                      // Если авторизация успешна
         obj.getDataFromJson("json/data.json",function(){obj.view(obj.user.privileges);});                                                    // Выполняем функцию загрузки всех товаров по пути к файлу товаров
       }
@@ -157,7 +157,7 @@ var obj={                                                                       
     table=table.querySelector("tbody");
     for(key in obj.card){
       var product = obj.data[key];
-      string+="<tr><td>"+key+"</td><td>"+product.name+"</td><td>"+product.barcode+"</td><td><input type=number min=0 max="+product.quantity+" value="+product.quantity+" oninput='obj.card["+key+"].quantity=this.value;'></td></tr>";
+      string+="<tr><td>"+key+"</td><td>"+product.name+"</td><td>"+product.barcode+"</td><td><input type=number min=0 value="+product.quantity+" oninput='obj.card["+key+"].quantity=this.value;'></td></tr>";
     }
     table.innerHTML=string;
     document.querySelector('.cardProducts').className+=" open";
